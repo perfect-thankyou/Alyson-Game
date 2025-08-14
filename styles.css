@@ -5,6 +5,7 @@ body {
 }
 
 #sky {
+  position: relative;
   background-color: #a0d8f1; /* blue sky */
   min-height: 60vh;
   padding: 20px;
