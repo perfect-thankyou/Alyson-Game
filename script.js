@@ -7,11 +7,12 @@ let seedInventory = {
   sunflower: parseInt(localStorage.getItem("seed_sunflower") || 0),
 };
 
+// Load or initialize garden state
 let gardenState = JSON.parse(localStorage.getItem("gardenState")) || {};
 
 function updateCoinDisplay() {
   document.getElementById("coin-count").textContent = coins;
-  localStorage.setItem("coins", coins); // Save coins to localStorage
+  localStorage.setItem("coins", coins);
 }
 
 function updateSeedDisplay() {
@@ -30,22 +31,13 @@ plots.forEach(plot => {
       return;
     }
 
-    // Get available seed types
     const availableSeeds = Object.entries(seedInventory).filter(([type, count]) => count > 0);
 
     if (availableSeeds.length === 0) {
       alert("🚫 You don't have any seeds to plant!");
       return;
-      
-      gardenState[plot.dataset.id] = {
-  seedType: selectedSeed,
-  stage: "seed"  // for now, everything starts as a seed
-};
-localStorage.setItem("gardenState", JSON.stringify(gardenState));
-
     }
 
-    // Build selection prompt
     let promptMessage = "Which seed would you like to plant?\n";
     availableSeeds.forEach(([type, count], index) => {
       promptMessage += `${index + 1}. ${capitalize(type)} (${count} available)\n`;
@@ -64,58 +56,52 @@ localStorage.setItem("gardenState", JSON.stringify(gardenState));
     // Plant the seed
     plot.classList.remove("empty");
     plot.classList.add("planted");
-    plot.textContent = "🌱"; // generic seedling emoji
-plot.dataset.seedType = selectedSeed; // store seed type for future growth
+    plot.textContent = "🌱"; // generic seedling
+    plot.dataset.seedType = selectedSeed;
+
+    // Save the planted seed to gardenState
+    gardenState[plot.dataset.id] = {
+      seedType: selectedSeed,
+      stage: "seed"
+    };
+    localStorage.setItem("gardenState", JSON.stringify(gardenState));
+
     seedInventory[selectedSeed]--;
     updateSeedDisplay();
   });
 });
 
-// Helper to get emoji based on seed type
-function getEmojiForSeed(type) {
-  const emojiMap = {
-    rose: "🌹",
-    tulip: "🌷",
-    clematis: "🌸",
-    sunflower: "🌻"
-  };
-  return emojiMap[type] || "🌱";
-}
-
-function capitalize(word) {
-  return word.charAt(0).toUpperCase() + word.slice(1);
-}
-
-
+// Restore garden state on load
 window.onload = () => {
-  updateCoinDisplay(); updateSeedDisplay(); plots.forEach(plot => {
-  const id = plot.dataset.id;
-  if (gardenState[id]) {
-    plot.classList.remove("empty");
-    plot.classList.add("planted");
-    plot.dataset.seedType = gardenState[id].seedType;
+  updateCoinDisplay();
+  updateSeedDisplay();
 
-    // Display stage — just show 🌱 for now
-    plot.textContent = "🌱";
-  }
-});
+  plots.forEach(plot => {
+    const id = plot.dataset.id;
+    if (gardenState[id]) {
+      plot.classList.remove("empty");
+      plot.classList.add("planted");
+      plot.textContent = "🌱";
+      plot.dataset.seedType = gardenState[id].seedType;
+    }
+  });
 };
 
+// Handle study time
 document.getElementById("submit-study").addEventListener("click", () => {
   const hours = parseFloat(document.getElementById("study-hours").value);
-  if (!isNaN(hours) && hours >= 1) {
+  if (!isNaN(hours) && hours >= 0.5) {
     const earned = Math.floor(hours * 2) * 5;
     coins += earned;
     updateCoinDisplay();
     alert(`You studied ${hours} hour(s) and earned ${earned} coins! 🌟`);
   } else {
-    alert("Please enter a number of hours ≥ 1.");
+    alert("Please enter at least 0.5 hour of study time.");
   }
-
   document.getElementById("study-hours").value = "";
 });
 
-// Elements
+// Shop logic
 const shopPanel = document.getElementById("shop-panel");
 const openShopBtn = document.getElementById("open-shop");
 const closeShopBtn = document.getElementById("close-shop");
@@ -124,17 +110,14 @@ const buyButtons = document.querySelectorAll(".buy-seed");
 let wateringCans = 3; // start with a few
 document.getElementById("watering-count").textContent = wateringCans;
 
-// Open shop
 openShopBtn.addEventListener("click", () => {
   shopPanel.classList.remove("hidden");
 });
 
-// Close shop
 closeShopBtn.addEventListener("click", () => {
   shopPanel.classList.add("hidden");
 });
 
-// Buy seed
 buyButtons.forEach(button => {
   button.addEventListener("click", () => {
     const cost = parseInt(button.dataset.cost, 10);
@@ -152,4 +135,17 @@ buyButtons.forEach(button => {
   });
 });
 
+// Utility functions
+function getEmojiForSeed(type) {
+  const emojiMap = {
+    rose: "🌹",
+    tulip: "🌷",
+    clematis: "🌸",
+    sunflower: "🌻"
+  };
+  return emojiMap[type] || "🌱";
+}
 
+function capitalize(word) {
+  return word.charAt(0).toUpperCase() + word.slice(1);
+}
