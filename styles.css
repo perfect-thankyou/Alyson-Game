@@ -109,11 +109,17 @@ body {
   border-radius: 8px;
 }
 
-.plant-plot.planted {
+.plant-plot.planted 
   background-color: #a2d99b;
   font-size: 24px;
   display: flex;
   justify-content: center;
   align-items: center;
 }
+
+.plant-plot[data-seed-type] {
+  font-size: 24px;
+  text-align: center;
+}
+
 
