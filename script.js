@@ -88,7 +88,17 @@ function capitalize(word) {
 
 
 window.onload = () => {
-  updateCoinDisplay(); updateSeedDisplay();
+  updateCoinDisplay(); updateSeedDisplay(); plots.forEach(plot => {
+  const id = plot.dataset.id;
+  if (gardenState[id]) {
+    plot.classList.remove("empty");
+    plot.classList.add("planted");
+    plot.dataset.seedType = gardenState[id].seedType;
+
+    // Display stage — just show 🌱 for now
+    plot.textContent = "🌱";
+  }
+});
 };
 
 document.getElementById("submit-study").addEventListener("click", () => {
