@@ -55,7 +55,8 @@ plots.forEach(plot => {
     // Plant the seed
     plot.classList.remove("empty");
     plot.classList.add("planted");
-    plot.textContent = getEmojiForSeed(selectedSeed);
+    plot.textContent = "🌱"; // generic seedling emoji
+plot.dataset.seedType = selectedSeed; // store seed type for future growth
     seedInventory[selectedSeed]--;
     updateSeedDisplay();
   });
