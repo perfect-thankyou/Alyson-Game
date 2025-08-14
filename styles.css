@@ -67,3 +67,26 @@ body {
   right: 60px;
   box-shadow: 0 0 40px 10px rgba(255, 223, 0, 0.5);
 }
+
+.hidden {
+  display: none;
+}
+
+#shop-panel {
+  position: fixed;
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #fffbe6;
+  border: 2px solid #333;
+  padding: 20px;
+  z-index: 10;
+  border-radius: 12px;
+  box-shadow: 4px 4px 20px rgba(0,0,0,0.2);
+  width: 300px;
+  text-align: center;
+}
+
+.shop-item {
+  margin: 15px 0;
+}
