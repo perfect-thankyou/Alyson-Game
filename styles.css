@@ -55,3 +55,14 @@ body {
   border: 2px solid #6b8e4e;
   border-radius: 6px;
 }
+
+.sun {
+  width: 80px;
+  height: 80px;
+  background: radial-gradient(circle at center, #ffeb3b, #fbc02d);
+  border-radius: 50%;
+  position: absolute;
+  top: 40px;
+  right: 60px;
+  box-shadow: 0 0 40px 10px rgba(255, 223, 0, 0.5);
+}
