@@ -1,6 +1,11 @@
 // Load saved coins or start with 100
 let coins = localStorage.getItem("coins") ? parseInt(localStorage.getItem("coins")) : 100;
-let seeds = localStorage.getItem("seeds") ? parseInt(localStorage.getItem("seeds")) : 0;
+let seedInventory = {
+  rose: parseInt(localStorage.getItem("seed_rose") || 0),
+  tulip: parseInt(localStorage.getItem("seed_tulip") || 0),
+  clematis: parseInt(localStorage.getItem("seed_clematis") || 0),
+  sunflower: parseInt(localStorage.getItem("seed_sunflower") || 0),
+};
 
 function updateCoinDisplay() {
   document.getElementById("coin-count").textContent = coins;
