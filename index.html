@@ -8,8 +8,11 @@
 </head>
 <body>
   <div id="sky">
-      <div class="sun"></div>
+    <div class="sun"></div>
+    
+    <!-- Main Game Panels Container -->
     <div id="game-container">
+      
       <!-- Study Input Panel -->
       <section id="study-panel">
         <h2>Log Your Study Time</h2>
@@ -17,50 +20,52 @@
         <button id="submit-study">Submit</button>
       </section>
 
-      <button id="open-shop">Open Shop</button>
+      <!-- Inventory Panel -->
+      <section id="inventory-panel">
+        <h3>🧺 Inventory</h3>
+        <p>🌹 Roses: <span id="seed-rose">0</span></p>
+        <p>🌷 Tulips: <span id="seed-tulip">0</span></p>
+        <p>🌸 Clematis: <span id="seed-clematis">0</span></p>
+        <p>🌻 Sunflowers: <span id="seed-sunflower">0</span></p>
+        <button id="open-shop">🛒 Open Shop</button>
+      </section>
 
-      <div id="inventory-panel">
-  <h3>🧺 Inventory</h3>
-  <p>🌹 Roses: <span id="seed-rose">0</span></p>
-  <p>🌷 Tulips: <span id="seed-tulip">0</span></p>
-  <p>🌸 Clematis: <span id="seed-clematis">0</span></p>
-  <p>🌻 Sunflowers: <span id="seed-sunflower">0</span></p>
-</div>
-      
-      <!-- Inventory / Stats Panel -->
+      <!-- Stats Panel -->
       <section id="stats-panel">
         <p>Coins: <span id="coin-count">0</span></p>
         <p>Watering Cans: <span id="watering-count">0</span></p>
       </section>
+      
     </div>
   </div>
 
- <div id="shop-panel" class="hidden">
-  <h2>🌱 Seed Shop</h2>
-  <p>Use coins to buy flower seeds!</p>
+  <!-- Shop Panel -->
+  <div id="shop-panel" class="hidden">
+    <h2>🌱 Seed Shop</h2>
+    <p>Use coins to buy flower seeds!</p>
 
-  <div class="shop-item">
-    <p>🌹 Rose Seed - 10 Coins</p>
-    <button class="buy-seed" data-type="rose" data-cost="10">Buy</button>
+    <div class="shop-item">
+      <p>🌹 Rose Seed - 10 Coins</p>
+      <button class="buy-seed" data-type="rose" data-cost="10">Buy</button>
+    </div>
+
+    <div class="shop-item">
+      <p>🌷 Tulip Seed - 20 Coins</p>
+      <button class="buy-seed" data-type="tulip" data-cost="20">Buy</button>
+    </div>
+
+    <div class="shop-item">
+      <p>🌸 Clematis Seed - 30 Coins</p>
+      <button class="buy-seed" data-type="clematis" data-cost="30">Buy</button>
+    </div>
+
+    <div class="shop-item">
+      <p>🌻 Sunflower Seed - 40 Coins</p>
+      <button class="buy-seed" data-type="sunflower" data-cost="40">Buy</button>
+    </div>
+
+    <button id="close-shop">❌ Close Shop</button>
   </div>
-
-  <div class="shop-item">
-    <p>🌷 Tulip Seed - 20 Coins</p>
-    <button class="buy-seed" data-type="tulip" data-cost="20">Buy</button>
-  </div>
-
-  <div class="shop-item">
-    <p>🌸 Clematis Seed - 30 Coins</p>
-    <button class="buy-seed" data-type="clematis" data-cost="30">Buy</button>
-  </div>
-
-  <div class="shop-item">
-    <p>🌻 Sunflower Seed - 40 Coins</p>
-    <button class="buy-seed" data-type="sunflower" data-cost="40">Buy</button>
-  </div>
-
-  <button id="close-shop">❌ Close Shop</button>
-</div>
 
   <!-- Garden Ground Area -->
   <div id="ground">
