@@ -13,16 +13,69 @@ function updateCoinDisplay() {
 }
 
 function updateSeedDisplay() {
-  document.getElementById("seed-count").textContent = seeds;
-  localStorage.setItem("seeds", seeds); // Save seeds
-}
-
-function updateSeedDisplay() {
   for (const type in seedInventory) {
     document.getElementById(`seed-${type}`).textContent = seedInventory[type];
     localStorage.setItem(`seed_${type}`, seedInventory[type]);
   }
 }
+
+const plots = document.querySelectorAll(".plant-plot");
+
+plots.forEach(plot => {
+  plot.addEventListener("click", () => {
+    if (!plot.classList.contains("empty")) {
+      alert("🌿 This plot already has a plant!");
+      return;
+    }
+
+    // Get available seed types
+    const availableSeeds = Object.entries(seedInventory).filter(([type, count]) => count > 0);
+
+    if (availableSeeds.length === 0) {
+      alert("🚫 You don't have any seeds to plant!");
+      return;
+    }
+
+    // Build selection prompt
+    let promptMessage = "Which seed would you like to plant?\n";
+    availableSeeds.forEach(([type, count], index) => {
+      promptMessage += `${index + 1}. ${capitalize(type)} (${count} available)\n`;
+    });
+
+    const choice = prompt(promptMessage);
+    const index = parseInt(choice) - 1;
+
+    if (isNaN(index) || index < 0 || index >= availableSeeds.length) {
+      alert("Invalid selection.");
+      return;
+    }
+
+    const selectedSeed = availableSeeds[index][0];
+
+    // Plant the seed
+    plot.classList.remove("empty");
+    plot.classList.add("planted");
+    plot.textContent = getEmojiForSeed(selectedSeed);
+    seedInventory[selectedSeed]--;
+    updateSeedDisplay();
+  });
+});
+
+// Helper to get emoji based on seed type
+function getEmojiForSeed(type) {
+  const emojiMap = {
+    rose: "🌹",
+    tulip: "🌷",
+    clematis: "🌸",
+    sunflower: "🌻"
+  };
+  return emojiMap[type] || "🌱";
+}
+
+function capitalize(word) {
+  return word.charAt(0).toUpperCase() + word.slice(1);
+}
+
 
 window.onload = () => {
   updateCoinDisplay(); updateSeedDisplay();
