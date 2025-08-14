@@ -1,0 +1,57 @@
+body {
+  font-family: sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+#sky {
+  background-color: #a0d8f1; /* blue sky */
+  min-height: 60vh;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#ground {
+  background-color: #8fbc8f; /* grassy green */
+  min-height: 40vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 20px;
+}
+
+#game-container {
+  width: 90%;
+  max-width: 800px;
+  display: flex;
+  justify-content: space-between;
+  gap: 40px;
+}
+
+#study-panel, #stats-panel {
+  background: #fffbe6;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 2px 2px 8px #ccc;
+  width: 45%;
+}
+
+#garden-grid {
+  width: 100%;
+}
+
+.ground-grid {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+}
+
+.plant-plot {
+  width: 80px;
+  height: 80px;
+  background-color: #d3eecb;
+  border: 2px solid #6b8e4e;
+  border-radius: 6px;
+}

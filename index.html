@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Study Garden</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="sky">
+    <div id="game-container">
+      <!-- Study Input Panel -->
+      <section id="study-panel">
+        <h2>Log Your Study Time</h2>
+        <input type="number" id="study-hours" placeholder="Hours studied today" min="0" />
+        <button id="submit-study">Submit</button>
+      </section>
+
+      <!-- Inventory / Stats Panel -->
+      <section id="stats-panel">
+        <p>Coins: <span id="coin-count">0</span></p>
+        <p>Watering Cans: <span id="watering-count">0</span></p>
+      </section>
+    </div>
+  </div>
+
+  <!-- Garden Ground Area -->
+  <div id="ground">
+    <section id="garden-grid">
+      <div class="ground-grid">
+        <div class="plant-plot"></div>
+        <div class="plant-plot"></div>
+        <div class="plant-plot"></div>
+        <div class="plant-plot"></div>
+        <div class="plant-plot"></div>
+        <div class="plant-plot"></div>
+      </div>
+    </section>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
