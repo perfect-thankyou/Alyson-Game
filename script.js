@@ -1,13 +1,19 @@
 // Load saved coins or start with 100
 let coins = localStorage.getItem("coins") ? parseInt(localStorage.getItem("coins")) : 100;
+let seeds = localStorage.getItem("seeds") ? parseInt(localStorage.getItem("seeds")) : 0;
 
 function updateCoinDisplay() {
   document.getElementById("coin-count").textContent = coins;
   localStorage.setItem("coins", coins); // Save coins to localStorage
 }
 
+function updateSeedDisplay() {
+  document.getElementById("seed-count").textContent = seeds;
+  localStorage.setItem("seeds", seeds); // Save seeds
+}
+
 window.onload = () => {
-  updateCoinDisplay();
+  updateCoinDisplay(); updateSeedDisplay();
 };
 
 document.getElementById("submit-study").addEventListener("click", () => {
