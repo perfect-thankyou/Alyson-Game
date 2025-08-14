@@ -1,28 +1,25 @@
-// Initial coin count
-let coins = 100;
+// Load saved coins or start with 100
+let coins = localStorage.getItem("coins") ? parseInt(localStorage.getItem("coins")) : 100;
 
-// Update coin display
 function updateCoinDisplay() {
   document.getElementById("coin-count").textContent = coins;
+  localStorage.setItem("coins", coins); // Save coins to localStorage
 }
 
-// Run on page load
 window.onload = () => {
   updateCoinDisplay();
 };
 
 document.getElementById("submit-study").addEventListener("click", () => {
-  const hours = parseInt(document.getElementById("study-hours").value, 10);
-
+  const hours = parseFloat(document.getElementById("study-hours").value);
   if (!isNaN(hours) && hours >= 1) {
-    const earned = hours * 10;
+    const earned = Math.floor(hours) * 10;
     coins += earned;
     updateCoinDisplay();
-    alert(`Great job! You earned ${earned} coins for studying ${hours} hour(s).`);
+    alert(`You studied ${hours} hour(s) and earned ${earned} coins! 🌟`);
   } else {
-    alert("Please enter at least 1 hour of study time.");
+    alert("Please enter a number of hours ≥ 1.");
   }
 
-  // Clear input field
   document.getElementById("study-hours").value = "";
 });
