@@ -13,7 +13,7 @@ window.onload = () => {
 document.getElementById("submit-study").addEventListener("click", () => {
   const hours = parseFloat(document.getElementById("study-hours").value);
   if (!isNaN(hours) && hours >= 1) {
-    const earned = Math.floor(hours) * 10;
+    const earned = Math.floor(hours * 2) * 5;
     coins += earned;
     updateCoinDisplay();
     alert(`You studied ${hours} hour(s) and earned ${earned} coins! 🌟`);
