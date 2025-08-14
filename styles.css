@@ -24,19 +24,31 @@ body {
 }
 
 #game-container {
-  width: 90%;
-  max-width: 800px;
   display: flex;
   justify-content: space-between;
-  gap: 40px;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 20px;
+  width: 90%;
+  max-width: 1200px;
 }
 
-#study-panel, #stats-panel {
+#study-panel,
+#inventory-panel,
+#stats-panel {
   background: #fffbe6;
   padding: 20px;
   border-radius: 10px;
   box-shadow: 2px 2px 8px #ccc;
-  width: 45%;
+  flex: 1;
+  min-width: 250px;
+  max-width: 300px;
+  height: 100%;
+}
+
+#inventory-panel button {
+  margin-top: 10px;
+  width: 100%;
 }
 
 #garden-grid {
@@ -93,8 +105,6 @@ body {
 
 #inventory-panel {
   background-color: #f5f5dc;
-  padding: 10px;
-  margin-top: 10px;
   border: 2px solid #ccc;
   border-radius: 8px;
 }
