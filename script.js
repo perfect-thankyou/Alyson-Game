@@ -23,3 +23,38 @@ document.getElementById("submit-study").addEventListener("click", () => {
 
   document.getElementById("study-hours").value = "";
 });
+
+// Elements
+const shopPanel = document.getElementById("shop-panel");
+const openShopBtn = document.getElementById("open-shop");
+const closeShopBtn = document.getElementById("close-shop");
+const buyButtons = document.querySelectorAll(".buy-seed");
+
+let wateringCans = 3; // start with a few
+document.getElementById("watering-count").textContent = wateringCans;
+
+// Open shop
+openShopBtn.addEventListener("click", () => {
+  shopPanel.classList.remove("hidden");
+});
+
+// Close shop
+closeShopBtn.addEventListener("click", () => {
+  shopPanel.classList.add("hidden");
+});
+
+// Buy seed
+buyButtons.forEach(button => {
+  button.addEventListener("click", () => {
+    const cost = parseInt(button.dataset.cost, 10);
+    if (coins >= cost) {
+      coins -= cost;
+      updateCoinDisplay(); // already handles UI + localStorage
+      alert("🌱 You bought a seed!");
+      // Future: Add seed to inventory or plant it
+    } else {
+      alert("🚫 Not enough coins!");
+    }
+  });
+});
+
