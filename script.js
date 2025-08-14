@@ -17,6 +17,13 @@ function updateSeedDisplay() {
   localStorage.setItem("seeds", seeds); // Save seeds
 }
 
+function updateSeedDisplay() {
+  for (const type in seedInventory) {
+    document.getElementById(`seed-${type}`).textContent = seedInventory[type];
+    localStorage.setItem(`seed_${type}`, seedInventory[type]);
+  }
+}
+
 window.onload = () => {
   updateCoinDisplay(); updateSeedDisplay();
 };
@@ -58,16 +65,18 @@ closeShopBtn.addEventListener("click", () => {
 buyButtons.forEach(button => {
   button.addEventListener("click", () => {
     const cost = parseInt(button.dataset.cost, 10);
+    const seedType = button.dataset.type;
+
     if (coins >= cost) {
       coins -= cost;
-      updateCoinDisplay(); // already handles UI + localStorage
-      seeds += 1;
-updateSeedDisplay();
-alert("🌱 You bought a seed! It’s been added to your inventory.");
-      // Future: Add seed to inventory or plant it
+      updateCoinDisplay();
+      seedInventory[seedType] += 1;
+      updateSeedDisplay();
+      alert(`🌱 You bought a ${seedType} seed!`);
     } else {
       alert("🚫 Not enough coins!");
     }
   });
 });
+
 
