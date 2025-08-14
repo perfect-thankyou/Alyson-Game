@@ -36,6 +36,13 @@ plots.forEach(plot => {
     if (availableSeeds.length === 0) {
       alert("🚫 You don't have any seeds to plant!");
       return;
+      
+      gardenState[plot.dataset.id] = {
+  seedType: selectedSeed,
+  stage: "seed"  // for now, everything starts as a seed
+};
+localStorage.setItem("gardenState", JSON.stringify(gardenState));
+
     }
 
     // Build selection prompt
