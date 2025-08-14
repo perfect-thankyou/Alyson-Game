@@ -56,7 +56,9 @@ buyButtons.forEach(button => {
     if (coins >= cost) {
       coins -= cost;
       updateCoinDisplay(); // already handles UI + localStorage
-      alert("🌱 You bought a seed!");
+      seeds += 1;
+updateSeedDisplay();
+alert("🌱 You bought a seed! It’s been added to your inventory.");
       // Future: Add seed to inventory or plant it
     } else {
       alert("🚫 Not enough coins!");
