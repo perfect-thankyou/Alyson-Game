@@ -7,6 +7,8 @@ let seedInventory = {
   sunflower: parseInt(localStorage.getItem("seed_sunflower") || 0),
 };
 
+let gardenState = JSON.parse(localStorage.getItem("gardenState")) || {};
+
 function updateCoinDisplay() {
   document.getElementById("coin-count").textContent = coins;
   localStorage.setItem("coins", coins); // Save coins to localStorage
