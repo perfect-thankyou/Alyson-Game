@@ -143,6 +143,23 @@ buyButtons.forEach(button => {
   });
 });
 
+// Watering can shop button
+const buyWateringBtn = document.querySelector(".buy-watering");
+
+buyWateringBtn.addEventListener("click", () => {
+  const cost = parseInt(buyWateringBtn.dataset.cost, 10);
+
+  if (coins >= cost) {
+    coins -= cost;
+    wateringCans += 1;
+    updateCoinDisplay();
+    updateWateringDisplay();
+    alert("💧 You bought a watering can!");
+  } else {
+    alert("🚫 Not enough coins!");
+  }
+});
+
 // Utility functions
 function getEmojiForSeed(type) {
   const emojiMap = {
