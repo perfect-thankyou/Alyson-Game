@@ -57,10 +57,9 @@ plots.forEach(plot => {
     // Plant the seed
     plot.classList.remove("empty");
     plot.classList.add("planted");
-    plot.textContent = "🌱"; // generic seedling
+    plot.textContent = "🌱";
     plot.dataset.seedType = selectedSeed;
 
-    // Save the planted seed to gardenState
     gardenState[plot.dataset.id] = {
       seedType: selectedSeed,
       stage: "seed"
@@ -146,10 +145,12 @@ function getTodayDateString() {
   return new Date().toISOString().split("T")[0]; // 'YYYY-MM-DD'
 }
 
+// NEW: render garden state and place buttons BELOW plot
 function renderGardenState() {
   plots.forEach(plot => {
     const id = plot.dataset.id;
     const state = gardenState[id];
+    const wrapper = plot.parentElement;
 
     if (!state) return;
 
@@ -163,22 +164,18 @@ function renderGardenState() {
 
     plot.classList.toggle("watered", wateredToday);
 
-    // Show correct emoji
-    if (state.stage === "sprout") {
-      plot.textContent = "🌿";
-    } else {
-      plot.textContent = "🌱";
-    }
+    // Display emoji
+    plot.textContent = state.stage === "sprout" ? "🌿" : "🌱";
 
-    // Add water button if missing
-    if (!plot.querySelector(".water-btn")) {
+    // Only add button once
+    if (!wrapper.querySelector(".water-btn")) {
       const btn = document.createElement("button");
       btn.textContent = "💧 Water";
       btn.classList.add("water-btn");
       btn.style.display = "block";
       btn.style.marginTop = "5px";
       btn.addEventListener("click", () => waterPlot(plot, state));
-      plot.appendChild(btn);
+      wrapper.appendChild(btn);
     }
   });
 }
