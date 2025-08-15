@@ -126,6 +126,25 @@ buyButtons.forEach(button => {
   });
 });
 
+}); // <--- End of buyButtons.forEach
+
+// Add this new watering can purchase logic:
+const buyWateringBtn = document.getElementById("buy-watering-can");
+
+buyWateringBtn.addEventListener("click", () => {
+  const cost = 5;
+  if (coins >= cost) {
+    coins -= cost;
+    wateringCans += 1;
+    updateCoinDisplay();
+    updateWateringDisplay();
+    alert("💧 You bought a watering can!");
+  } else {
+    alert("🚫 Not enough coins!");
+  }
+});
+
+
 // Utility functions
 function getEmojiForSeed(type) {
   const emojiMap = {
@@ -181,12 +200,23 @@ function renderGardenState() {
 }
 
 function waterPlot(plot, state) {
+  // Step 3: Check if user has watering cans
+  if (wateringCans <= 0) {
+    alert("🚫 You're out of watering cans! Buy more in the shop.");
+    return;
+  }
+
   const today = getTodayDateString();
 
   if (state.lastWatered === today) {
     alert("⏳ Already watered today!");
     return;
   }
+
+  // Use a watering can
+  wateringCans -= 1;
+  updateWateringDisplay();
+  localStorage.setItem("wateringCans", wateringCans);
 
   const yesterday = new Date();
   yesterday.setDate(yesterday.getDate() - 1);
