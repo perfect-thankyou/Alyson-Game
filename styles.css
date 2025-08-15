@@ -130,4 +130,6 @@ body {
   text-align: center;
 }
 
-
+.plant-plot.watered {
+  background-color: #cceeff; /* Light blue background when watered */
+}
