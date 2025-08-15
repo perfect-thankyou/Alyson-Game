@@ -133,3 +133,15 @@ body {
 .plant-plot.watered {
   background-color: #cceeff; /* Light blue background when watered */
 }
+
+.plot-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 10px;
+}
+
+.water-btn {
+  margin-top: 5px;
+}
+
