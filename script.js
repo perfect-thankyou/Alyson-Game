@@ -8,6 +8,8 @@ let seedInventory = {
   sunflower: parseInt(localStorage.getItem("seed_sunflower") || 0),
 };
 
+let wateringCans = parseInt(localStorage.getItem("wateringCans") || 3);
+
 // Load or initialize garden state
 let gardenState = JSON.parse(localStorage.getItem("gardenState")) || {};
 
@@ -21,6 +23,11 @@ function updateSeedDisplay() {
     document.getElementById(`seed-${type}`).textContent = seedInventory[type];
     localStorage.setItem(`seed_${type}`, seedInventory[type]);
   }
+}
+
+function updateWateringDisplay() {
+  document.getElementById("watering-count").textContent = wateringCans;
+  localStorage.setItem("wateringCans", wateringCans);
 }
 
 const plots = document.querySelectorAll(".plant-plot");
@@ -75,6 +82,7 @@ plots.forEach(plot => {
 window.onload = () => {
   updateCoinDisplay();
   updateSeedDisplay();
+  updateWateringDisplay();
   renderGardenState();
 };
 
@@ -98,9 +106,6 @@ const openShopBtn = document.getElementById("open-shop");
 const closeShopBtn = document.getElementById("close-shop");
 const buyButtons = document.querySelectorAll(".buy-seed");
 
-let wateringCans = 3;
-document.getElementById("watering-count").textContent = wateringCans;
-
 openShopBtn.addEventListener("click", () => {
   shopPanel.classList.remove("hidden");
 });
@@ -112,38 +117,31 @@ closeShopBtn.addEventListener("click", () => {
 buyButtons.forEach(button => {
   button.addEventListener("click", () => {
     const cost = parseInt(button.dataset.cost, 10);
-    const seedType = button.dataset.type;
+    const type = button.dataset.type;
 
-    if (coins >= cost) {
-      coins -= cost;
-      updateCoinDisplay();
-      seedInventory[seedType] += 1;
-      updateSeedDisplay();
-      alert(`🌱 You bought a ${seedType} seed!`);
+    if (type === "watering") {
+      if (coins >= cost) {
+        coins -= cost;
+        wateringCans += 1;
+        updateCoinDisplay();
+        updateWateringDisplay();
+        alert("💧 You bought a watering can!");
+      } else {
+        alert("🚫 Not enough coins!");
+      }
     } else {
-      alert("🚫 Not enough coins!");
+      if (coins >= cost) {
+        coins -= cost;
+        seedInventory[type] += 1;
+        updateCoinDisplay();
+        updateSeedDisplay();
+        alert(`🌱 You bought a ${type} seed!`);
+      } else {
+        alert("🚫 Not enough coins!");
+      }
     }
   });
 });
-
-}); // <--- End of buyButtons.forEach
-
-// Add this new watering can purchase logic:
-const buyWateringBtn = document.getElementById("buy-watering-can");
-
-buyWateringBtn.addEventListener("click", () => {
-  const cost = 5;
-  if (coins >= cost) {
-    coins -= cost;
-    wateringCans += 1;
-    updateCoinDisplay();
-    updateWateringDisplay();
-    alert("💧 You bought a watering can!");
-  } else {
-    alert("🚫 Not enough coins!");
-  }
-});
-
 
 // Utility functions
 function getEmojiForSeed(type) {
@@ -161,10 +159,9 @@ function capitalize(word) {
 }
 
 function getTodayDateString() {
-  return new Date().toISOString().split("T")[0]; // 'YYYY-MM-DD'
+  return new Date().toISOString().split("T")[0];
 }
 
-// NEW: render garden state and place buttons BELOW plot
 function renderGardenState() {
   plots.forEach(plot => {
     const id = plot.dataset.id;
@@ -182,11 +179,8 @@ function renderGardenState() {
     const wateredToday = lastWatered === today;
 
     plot.classList.toggle("watered", wateredToday);
-
-    // Display emoji
     plot.textContent = state.stage === "sprout" ? "🌿" : "🌱";
 
-    // Only add button once
     if (!wrapper.querySelector(".water-btn")) {
       const btn = document.createElement("button");
       btn.textContent = "💧 Water";
@@ -200,12 +194,6 @@ function renderGardenState() {
 }
 
 function waterPlot(plot, state) {
-  // Step 3: Check if user has watering cans
-  if (wateringCans <= 0) {
-    alert("🚫 You're out of watering cans! Buy more in the shop.");
-    return;
-  }
-
   const today = getTodayDateString();
 
   if (state.lastWatered === today) {
@@ -213,10 +201,10 @@ function waterPlot(plot, state) {
     return;
   }
 
-  // Use a watering can
-  wateringCans -= 1;
-  updateWateringDisplay();
-  localStorage.setItem("wateringCans", wateringCans);
+  if (wateringCans <= 0) {
+    alert("🚫 You're out of watering cans! Buy more in the shop.");
+    return;
+  }
 
   const yesterday = new Date();
   yesterday.setDate(yesterday.getDate() - 1);
@@ -235,8 +223,10 @@ function waterPlot(plot, state) {
     plot.textContent = "🌿";
   }
 
-  plot.classList.add("watered");
+  wateringCans--;
+  updateWateringDisplay();
 
+  plot.classList.add("watered");
   gardenState[plot.dataset.id] = state;
   localStorage.setItem("gardenState", JSON.stringify(gardenState));
 
