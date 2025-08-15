@@ -75,6 +75,7 @@ plots.forEach(plot => {
 
     seedInventory[selectedSeed]--;
     updateSeedDisplay();
+    renderGardenState();
   });
 });
 
